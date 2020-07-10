@@ -5,8 +5,13 @@
 <script>
 
   window.addEventListener('load', ()=>{ 
-    var marker = document.querySelector('#marker');
-    var assets = document.querySelector('#assets');
+    console.log('loaded!')
+
+    var predioAsset = document.querySelector('#predio');
+    predioAsset.addEventListener('progress', (xhr, loadedBytes, totalBytes)=>{
+      console.log('predio asset:', xhr, loadedBytes, totalBytes)
+    })
+    
   });
 
   function slowFade(entity, duration, inverse=false) {
