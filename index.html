@@ -9,7 +9,7 @@
 
     var predioAsset = document.querySelector('#predio');
     predioAsset.addEventListener('progress', xhr => {
-      console.log('predio asset:', xhr.detail.loadedBytes, xhr.detail.totalBytes)
+      console.log('predio asset:', xhr.detail.loadedBytes / xhr.detail.totalBytes * 100)
     })
     
   });
