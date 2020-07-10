@@ -8,8 +8,8 @@
     console.log('loaded!')
 
     var predioAsset = document.querySelector('#predio');
-    predioAsset.addEventListener('progress', (xhr, loadedBytes, totalBytes)=>{
-      console.log('predio asset:', xhr, loadedBytes, totalBytes)
+    predioAsset.addEventListener('progress', xhr => {
+      console.log('predio asset:', xhr.detail.loadedBytes, xhr.detail.totalBytes)
     })
     
   });
