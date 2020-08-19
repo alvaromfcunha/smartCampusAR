@@ -1,22 +1,60 @@
-AFRAME.registerComponent('button', {
-  init: function() {
-    const button = document.querySelector('#buttonEntity');
-    const predio = document.querySelector('#predioEntity');
-    const sala = document.querySelector('#salaEntity');
+const tag = '[Button]'
 
-    button.addEventListener('click', function(ev, target){
-      console.log("clicked!");
-
-      predio.emit('rotate');
-      predio.emit('zoom_out');
-      slowFade(predio, 50);
-      
-      setTimeout(()=>{
-        sala.object3D.position.set(0, 0, .3);
-        sala.emit('rotate');
-        sala.emit('zoom_in');
-        slowFade(sala, 50, true);
-      }, 3000);
+export default class Button {
+  constructor(props){
+    this.entity = document.createElement('a-entity');
+    this.entity.setAttribute('button', '');
+    this.entity.setAttribute('id','button')
+    this.entity.setAttribute('class','clickable')
+    this.entity.setAttribute('gltf-model','#button-asset')
+    this.entity.setAttribute('position','1 0 .5')
+    this.entity.setAttribute('rotation','0 -90 90')
+    this.entity.setAttribute('scale','.2 .1 .2')
+    
+    AFRAME.registerComponent('button', {
+      init: function() {
+    
+      }
     });
+    
   }
-});
+  
+  spawn(scene){
+    return new Promise((resolve, reject) =>{
+      try {
+        if(scene.tagName == 'A-MARKER'){
+          scene.appendChild(this.entity)
+          resolve(this.entity);
+        }
+        else
+          reject(`Can't spawn ${tag} on a non scene element!`);
+      }catch(e){
+        reject(`Can't spawn ${tag}! ${e}`);
+      }
+    })
+  }
+
+  despawn(scene){
+    return new Promise((resolve, reject) =>{
+      try {
+        if(scene.tagName == 'A-MARKER'){
+          scene.removeChild(this.entity)
+          resolve(this.entity);
+        }
+        else
+          reject(`Can't despawn ${tag} on a non scene element!`);
+      }catch(e){
+        reject(`Can't despawn ${tag}! ${e}`);
+      }
+    })
+  }
+
+  modifyAttribute(attr, value){
+    this.entity.setAttribute(attr, value)
+  }
+}
+
+
+
+
+
