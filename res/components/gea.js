@@ -1,21 +1,55 @@
-// AFRAME.registerComponent('gea', {
-//   init: function() {
-//     console.log('OG:   ', this.el.object3D)
-//     this.addEventListner('model-loaded', () => {
-//       var object = this.el.getObject3D('mesh');
-//       console.log('object:  ', object)
-//     })
-//     //var object = this.el.object3D.children[0];
-//     // console.log('object keys:  ', Object.keys(object))
-//     // console.log('object values:  ', Object.values(object))
-//     // console.log('object entries:  ', Object.entries(object))
-//     // console.log('stringfy:   ', JSON.stringify(object, null, '\t'))
-    
-//     //var clips = mesh.animations;
-//     // var mixer = new THREE.AnimationMixer( mesh );
-//     //console.log('clips:  ', clips)
-//   },
-//   update: function () {
-//     // mixer.update( deltaSeconds );
-//   }
-// })
+const tag = '[GEA]'
+
+export default class Gea {
+  constructor(props){
+    this.entity = document.createElement('a-entity');
+    this.entity.setAttribute('gea', '');
+    this.entity.setAttribute('id','gea')
+    this.entity.setAttribute('gltf-model','#gea-asset')
+    this.entity.setAttribute('position','0 0 1')
+    this.entity.setAttribute('rotation','0 0 0')
+    this.entity.setAttribute('scale','1 1 1')
+    this.entity.setAttribute('model-opacity','1')
+
+    AFRAME.registerComponent('nazareth-room', {
+      init: function() {
+        
+      }
+    })
+  }
+  
+  spawn(scene){
+    return new Promise((resolve, reject) =>{
+      try {
+        if(scene.tagName == 'A-MARKER'){
+          scene.appendChild(this.entity)
+          resolve(this.entity);
+        }
+        else
+          reject(`Can't spawn ${tag} on a non scene element!`);
+      }catch(e){
+        reject(`Can't spawn ${tag}! ${e}`);
+      }
+    })
+  }
+
+  despawn(scene){
+    return new Promise((resolve, reject) =>{
+      try {
+        if(scene.tagName == 'A-MARKER'){
+          scene.removeChild(this.entity)
+          resolve(this.entity);
+        }
+        else
+          reject(`Can't despawn ${tag} on a non scene element!`);
+      }catch(e){
+        reject(`Can't despawn ${tag}! ${e}`);
+      }
+    })
+  }
+
+  modifyAttribute(attr, value){
+    this.entity.setAttribute(attr, value)
+  }
+}
+
