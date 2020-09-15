@@ -51,5 +51,9 @@ export default class Gec {
   modifyAttribute(attr, value){
     this.entity.setAttribute(attr, value)
   }
+
+  getReference(){
+    return this.entity
+  }
 }
 

@@ -3,15 +3,15 @@ const tag = '[ButtonNazareth]'
 export default class ButtonNazareth {
   constructor(props){
     this.entity = document.createElement('a-entity');
-    this.entity.setAttribute('buttonNazareth', '');
-    this.entity.setAttribute('id','buttonNazareth')
+    this.entity.setAttribute('button-nazareth', '');
+    this.entity.setAttribute('id','button-nazareth')
     this.entity.setAttribute('class','clickable')
     this.entity.setAttribute('gltf-model','#button-asset')
     this.entity.setAttribute('position','1 0 .5')
     this.entity.setAttribute('rotation','0 -90 90')
     this.entity.setAttribute('scale','.2 .1 .2')
     
-    AFRAME.registerComponent('button', {
+    AFRAME.registerComponent('button-nazareth', {
       init: function() {
     
       }
@@ -51,6 +51,10 @@ export default class ButtonNazareth {
 
   modifyAttribute(attr, value){
     this.entity.setAttribute(attr, value)
+  }
+
+  getReference(){
+    return this.entity
   }
 }
 

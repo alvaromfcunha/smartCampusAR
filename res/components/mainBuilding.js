@@ -6,6 +6,7 @@ export default class MainBuilding {
     this.entity.setAttribute('main-building', '');
     this.entity.setAttribute('id','main-building')
     this.entity.setAttribute('gltf-model','#main-building-asset')
+    // (x z y)
     this.entity.setAttribute('position','0 0 .3')
     this.entity.setAttribute('rotation','0 -90 90')
     this.entity.setAttribute('scale','.2 .2 .2')
@@ -29,8 +30,8 @@ export default class MainBuilding {
     this.entity.setAttribute('animation__rotation',`
       property: rotation; 
       from: 0 -90 90;
-      to: 360 -90 90; 
-      dur: 1600;
+      to: 225 -90 90; 
+      dur: 1000;
       loop: true;
       elasticity: 500;
       easing: easeInOutQuad;
@@ -76,6 +77,10 @@ export default class MainBuilding {
 
   modifyAttribute(attr, value){
     this.entity.setAttribute(attr, value)
+  }
+
+  getReference(){
+    return this.entity
   }
 }
 

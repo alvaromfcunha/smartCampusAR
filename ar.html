@@ -12,19 +12,13 @@
   <!-- ar.JS and others -->
   <!-- <script src="http://code.jquery.com/jquery.min.js"></script> -->
   <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script> 
-  <script src="https://rawgit.com/donmccurdy/aframe-extras/master/src/loaders/fbx-model.js"></script>
-  <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/libs/inflate.min.js"></script>
+  <!-- <script src="https://rawgit.com/donmccurdy/aframe-extras/master/src/loaders/fbx-model.js"></script> -->
+  <!-- <script src="https://rawgit.com/mrdoob/three.js/master/examples/js/libs/inflate.min.js"></script> -->
   
   <!-- Model opacity -->
   <script src="res/components/modelOpacity.js"></script>
-
-  <!-- Componets NOW IMPORTING IN ar.js!!!! -->
-  <!-- <script src="res/components/ambient-light.js"></script>
-  <script src="res/components/button.js"></script>
-  <script src="res/components/main-entity.js"></script>
-  <script src="res/components/gea.js"></script> -->
 
   <!-- Logic script -->
   <script type="module" src=ar.js></script>
@@ -78,10 +72,10 @@
           />
         </a-assets>
 
-        <!-- url="/res/markers/pattern-inatel1.patt"  -->
         <a-marker 
-        button
-        preset="hiro"
+          button
+          type="pattern"
+          url="/res/markers/pattern-inatel.patt" 
           id="marker" 
           emitevents="true"
         > 
@@ -89,70 +83,6 @@
             cursor="rayOrigin: mouse"
             raycaster="objects: .clickable; useWorldCoordinates: true;"
           ></a-entity> 
-
-          <!-- <a-entity 
-            ambient-light
-            material="visible: false"
-            position="0.5 1 -0.5"
-            light="
-              type: point;
-              intensity: 3;
-              distance: 0;
-              decay: .5"
-          ></a-entity> -->
-          
-          <!-- gltf-model="/res/gltf/gea.gltf" -->
-          <!-- <a-entity gea
-            id="gea"
-            fbx-model="src: url(/res/fbx/gea.fbx);"
-            position="-1 0 0"
-            scale=".001 .001 .001"
-          ></a-entity> -->
-
-          <!-- <a-entity 
-            button
-            id="button"
-            class="clickable" 
-            gltf-model = "#box" 
-            position = "1 0 .5" 
-            scale = "0.2 0.1 0.2"
-          ></a-entity>  -->
-
-          <!-- <a-entity 
-            main-entity
-            id="main-entity"
-            gltf-model="#main-building" 
-            position="0 0 .3" 
-            rotation="0 -90 90" 
-            scale=".2 .2 .2"
-            model-opacity="1"
-            animation__zoom_out="
-              property: scale; 
-              to: 0 0 0; 
-              dur: 1600;
-              loop: false;
-              easing: linear;
-              startEvents: zoom_out;
-            "
-            animation__zoom_in="
-              property: scale; 
-              to: .2 .2 .2; 
-              dur: 1600;
-              loop: false;
-              easing: linear;
-              startEvents: zoom_in;
-            "
-            animation__rotation="
-              property: rotation; 
-              from: 0 -90 90;
-              to: 360 -90 90; 
-              dur: 1600;
-              loop: false;
-              elasticity: 500;
-              easing: easeInOutQuad;
-              startEvents: rotate;
-            "
-          ></a-entity> -->
 
         </a-marker>
 

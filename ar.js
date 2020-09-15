@@ -1,4 +1,5 @@
 import { slowFade } from './res/utils/custom-functions.js';
+
 import MainBuilding from './res/components/mainBuilding.js';
 import NazarethRoom from './res/components/nazarethRoom.js'
 import ButtonNazareth from './res/components/buttonNazareth.js';
@@ -15,104 +16,143 @@ window.addEventListener('load', () => {
     console.log('predio asset:', xhr.detail.loadedBytes / xhr.detail.totalBytes * 100)
   })
   
-  var mainBuilding = new MainBuilding();
-  var buttonNazareth = new ButtonNazareth();
   var ambientLight = new AmbientLight();
 
-  var nazarethRoom = new NazarethRoom();
-  nazarethRoom.modifyAttribute('model_opacity', '0')
+  var mainBuilding = new MainBuilding();
+  const mainBuildingRef = mainBuilding.getReference();
 
-  var buttonCourses = new ();
-  buttonCourses.modifyAttribute('position', '0 0 0')
-
-  var gea = new Gea();
-  gea.modifyAttribute('position', '0 0 0')
-
-  var get = new Get();
-  get.modifyAttribute('position', '0 0 0')
-
-  var gec = new Gec();
-  gec.modifyAttribute('position', '0 0 0')
+  var buttonNazareth = new ButtonNazareth();
+  const buttonNazarethRef = buttonNazareth.getReference();
   
+  var nazarethRoom = new NazarethRoom();
+  const nazarethRoomRef = nazarethRoom.getReference();
+
+  var buttonGuilherme = new ButtonGuilherme();
+  const buttonGuilhermeRef = buttonGuilherme.getReference();
+  
+  var guilhermeRoom = new GuilhermeRoom();
+  const guilhermeRoomRef = guilhermeRoom.getReference();
+
+  var buttonCourses = new ButtonCourses();
+  const buttonCoursesRef = buttonCourses.getReference();
+
   const marker = document.querySelector('#marker')
   
   ambientLight.spawn(marker)
   .then((ambientLightObject) => {
-    console.log('AmbientLight spawned! ', ambientLightObject)
+    console.log('AmbientLight spawned! ', ambientLightObject);
   })
   .catch((error) => {
-    console.warn(error)
+    console.warn(error);
   });
 
   mainBuilding.spawn(marker)
-  .then((mainBuildingObject) => {
-    console.log('MainBuilding spawned! ', mainBuildingObject)
-
-    buttonNazareth.spawn(marker)
-    .then((buttonNazarethObject) => {
-      console.log('Button spawned! ', buttonNazarethObject)
-      buttonNazarethObject.addEventListener('click', ()=>{
-        console.log("clicked!");
-        // mainBuildingObject.emit('rotate');
-
-        slowFade(mainBuildingObject, 50);
-
-        mainBuildingObject.emit('zoom_out');
-
-        mainBuildingObject.addEventListener('animationcomplete__zoom_out', ()=>{
-          
-          nazarethRoom.spawn(marker).then((nazarethRoomObject)=>{
-            console.log('NazarethRoom spawned! ', nazarethRoomObject)
-            slowFade(nazarethRoomObject, 50, true)
-            //nazarethRoomObject.emit('zoom_out')
-          })
-          .catch((error) => {
-            console.warn(error)
-          });
-        })
-
-      })
-    })
-    .catch((error) => {
-      console.warn(error)
-    });
-    
-    buttonCourses.spawn(marker)
-    .then((buttonCoursesObject)=>{
-      console.log('ButtonCourses spawned! ', buttonCoursesObject)
-      buttonCoursesObject.addEventListener('click', ()=>{
-        mainBuilding.despawn()
-
-      })
-    })
-
+  .then(()=>{
+    console.log('MainBuilding spawned! ', mainBuildingRef);
   })
   .catch((error) => {
-    console.warn(error)
+    console.warn(error);
   });
 
- 
+  var buttonNazarethState = 'room';
+  buttonNazareth.spawn(marker)
+  .then(()=>{
+    console.log('ButtonNazareth spawned! ', buttonNazarethRef);
+    buttonNazarethRef.addEventListener('click', () => {
+      if (buttonNazarethState == 'room'){
+        const mbSlowFadePromise = slowFade(mainBuildingRef, 1000);
+        const bgSlowFadePromise = slowFade(buttonGuilhermeRef, 1000);
 
+        Promise.all([mbSlowFadePromise, bgSlowFadePromise])
+        .then(() => {
+          const mainBuildingDespawnPromise = mainBuilding.despawn(marker);
+          const buttonGuilhermeDespawnPromise = buttonGuilherme.despawn(marker);
+          return [mainBuildingDespawnPromise, buttonGuilhermeDespawnPromise];
+        })
+        .then(() => {
+          nazarethRoom.modifyAttribute('model-opacity', '0');
+          const nazarethRoomSpawnPromise = nazarethRoom.spawn(marker);
+          return nazarethRoomSpawnPromise;
+        })
+        .then(() => {
+          const znSlowFadePromise = slowFade(nazarethRoomRef, 1000, true);
+          return znSlowFadePromise;
+        })
+        .then(() => {
+          buttonNazarethState = 'building';
+        })
+      }
+      else if (buttonNazarethState = 'building'){
+        slowFade(nazarethRoomRef, 1000)
+        .then(() => {
+          return nazarethRoom.despawn(marker);
+        })
+        .then(() => {
+          return [
+            mainBuilding.spawn(marker),
+            buttonGuilherme.spawn(marker)
+          ]
+        })
+        .then(() => {
+          buttonNazarethState = 'room';
+        });
+      }
+      // mainBuilding.despawn(marker)
+      // setTimeout(() => {
+      //   mainBuilding.spawn(marker)
+      // }, 3000)
+    })
+  })
+  .catch((error) => {
+    console.warn(error);
+  });
 
-  //console.log('OG:   ', gea.object3D)
-  // const gea = document.querySelector('#gea')
-  // gea.addEventListener('model-loaded', () => {
-  //   var object = gea.getObject3D('mesh');
-  //   console.log('object:  ', object)
-  // })
+  var buttonGuilhermeState = 'room';
+  buttonGuilherme.spawn(marker)
+  .then(()=>{
+    console.log('ButtonGuilherme spawned! ', buttonGuilhermeRef);
+    buttonGuilhermeRef.addEventListener('click', () => {
+      if (buttonGuilhermeState == 'room'){
+        const mbSlowFadePromise = slowFade(mainBuildingRef, 1000);
+        const bzSlowFadePromise = slowFade(buttonNazarethRef, 1000);
 
-  // const predioAsset = document.querySelector('#main-building');
-  // const predio = document.querySelector('#predioEntity');
-
-  // // predio.addEventListener('animationbegin__rotate', () => {
-  //   console.log("rodou")
-  //   predio.emit('zoom_out')
-  //   slowFade(predio, 50)
-  // })
-
-  // predio.addEventListener('animationcomplete__zoom_out', () => {
-  //   predio.emit('zoom_out')
-  //   slowFade(predio, 50)
-  // })
+        Promise.all([mbSlowFadePromise, bzSlowFadePromise])
+        .then(() => {
+          return [
+            mainBuilding.despawn(marker),
+            buttonNazareth.despawn(marker)
+          ];
+        })
+        .then(() => {
+          guilhermeRoom.modifyAttribute('model-opacity', '0');
+          return guilhermeRoom.spawn(marker);
+        })
+        .then(() => {
+          return slowFade(guilhermeRoomRef, 1000, true)
+        })
+        .then(() => {
+          buttonGuilhermeState = 'building';
+        })
+      }
+      else if (buttonGuilhermeState == 'building'){
+        slowFade(guilhermeRoomRef, 1000)
+        .then(() => {
+          return guilhermeRoom.despawn(marker);
+        })
+        .then(() => {
+          return [
+            mainBuilding.spawn(marker),
+            buttonNazareth.spawn(marker)
+          ]
+        })
+        .then(() => {
+          buttonGuilhermeState = 'room';
+        });
+      }
+    })
+  })
+  .catch((error) => {
+    console.warn(error);
+  });
 
 });

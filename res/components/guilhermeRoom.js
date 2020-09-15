@@ -6,9 +6,9 @@ export default class GuilhermeRoom {
     this.entity.setAttribute('guilherme-room', '');
     this.entity.setAttribute('id','guilherme-room')
     this.entity.setAttribute('gltf-model','#guilherme-room-asset')
-    this.entity.setAttribute('position','0 0 1')
+    this.entity.setAttribute('position','0 0 0')
     this.entity.setAttribute('rotation','0 -90 90')
-    this.entity.setAttribute('scale','.3 .3 .3')
+    this.entity.setAttribute('scale','.1 .1 .1')
     this.entity.setAttribute('model-opacity','1')
     this.entity.setAttribute('animation__zoom_out',`
       property: scale; 
@@ -37,7 +37,7 @@ export default class GuilhermeRoom {
       startEvents: rotate;
     `)
 
-    AFRAME.registerComponent('nazareth-room', {
+    AFRAME.registerComponent('guilherme-room', {
       init: function() {
         
       }
@@ -76,6 +76,10 @@ export default class GuilhermeRoom {
 
   modifyAttribute(attr, value){
     this.entity.setAttribute(attr, value)
+  }
+
+  getReference(){
+    return this.entity
   }
 }
 
