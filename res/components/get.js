@@ -6,12 +6,12 @@ export default class Get {
     this.entity.setAttribute('get', '');
     this.entity.setAttribute('id','get')
     this.entity.setAttribute('gltf-model','#get-asset')
-    this.entity.setAttribute('position','0 0 1')
-    this.entity.setAttribute('rotation','0 0 0')
-    this.entity.setAttribute('scale','1 1 1')
+    this.entity.setAttribute('position','0 0 0')
+    this.entity.setAttribute('rotation','-45 0 0')
+    this.entity.setAttribute('scale','.1 .1 .1')
     this.entity.setAttribute('model-opacity','1')
 
-    AFRAME.registerComponent('nazareth-room', {
+    AFRAME.registerComponent('get', {
       init: function() {
         
       }

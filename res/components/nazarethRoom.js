@@ -1,4 +1,4 @@
-const tag = '[NarazerhRoom]'
+const tag = '[NarazethRoom]'
 
 export default class MainBuilding {
   constructor(props){

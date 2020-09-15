@@ -11,7 +11,7 @@ export default class Gec {
     this.entity.setAttribute('scale','1 1 1')
     this.entity.setAttribute('model-opacity','1')
 
-    AFRAME.registerComponent('nazareth-room', {
+    AFRAME.registerComponent('gec', {
       init: function() {
         
       }
